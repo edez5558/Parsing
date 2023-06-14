@@ -1,0 +1,25 @@
+//Comment
+
+/* 
+Another comment
+*/
+
+func int : main(int: argc, string: []argv){
+  int: var;
+  int: var2;
+
+  var2 = 5;
+  var1 = var2 + (var2 * 4);
+
+  while(var == (4 * var2)){
+    var -= 1;
+  }
+
+  if(true)
+    call print("hello world");
+  else
+    call print("bye world");
+  endif
+
+  return 0;
+}
