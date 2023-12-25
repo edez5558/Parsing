@@ -1,3 +1,4 @@
 precompiler/
 bin/compiler.exe
+bin/compiler
 src/test_gramm.c

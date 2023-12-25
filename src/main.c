@@ -58,5 +58,6 @@ int main(int argc, char* argv[]){
 
     parser_check_lexical(prs);
     lexical_free(&lexer);
+    parser_free(&prs);
     return 0;
 }

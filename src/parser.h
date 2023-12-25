@@ -7,6 +7,8 @@
 #include "grammar/grammar_file.h"
 #include <stdlib.h>
 
+#define GRAMMAR_FILE "compiler.grammar"
+
 typedef struct{
 	lexical* lexer;
 	grammar* gramm;
@@ -24,7 +26,7 @@ parser* parser_new(lexical* lexer){
 	new_parser->lexer = lexer;
 	new_parser->reader = reader_grammar_new();
 
-	reader_grammar_by_file(new_parser->reader,"compiler.grammar");
+	reader_grammar_by_file(new_parser->reader,GRAMMAR_FILE);
 
 	new_parser->gramm = new_parser->reader->gramm;
 
@@ -35,6 +37,12 @@ parser* parser_new(lexical* lexer){
 	grammar_check_LL(new_parser->gramm);
 
 	return new_parser;
+}
+
+void parser_free(parser** psr){
+	grammar_free(&((*psr)->gramm));
+
+	*psr = NULL;
 }
 
 void parser_check_lexical(parser* pr){

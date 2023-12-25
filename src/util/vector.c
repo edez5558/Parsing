@@ -10,6 +10,7 @@ vector* vector_new(size_t element_size,size_t init_capacity){
 	new_vector->alloc_size = init_capacity;
 	new_vector->size = 0;
 	new_vector->data = malloc(init_capacity * element_size);
+	new_vector->callback = NULL;
 
 	return new_vector;
 }
@@ -74,8 +75,20 @@ void vector_push_n(vector* v,void* value,size_t n){
 	vector_set_n(v,v->size - n,value,n);	
 }
 
+void vector_foreach(vector* v, void (*callback)(void*)){
+	for(size_t i = 0; i < v->size; i++){
+		(*callback)((char*)v->data + (i * v->element_size));
+	}
+}
+
 void vector_free(vector* v){
+	if(v->callback)
+		vector_foreach(v,v->callback);
+
 	free(v->data);
 	free(v);
 }
 
+void vector_set_free(vector* v, void (*callback)(void*)){
+	v->callback = callback;
+}

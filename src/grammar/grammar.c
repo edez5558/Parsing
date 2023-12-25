@@ -98,6 +98,10 @@ void vecint_push_unique_vecint(vector_int* vec_a,vector_int* vec_b){
 	}
 }
 
+void free_vector_of_vector(void* v){
+	puts("Free Vector Of Vector");
+	vector_free(*((void**)v));
+}
 
 rule* rule_new(int simbol){
 	rule* rl = (rule*)malloc(sizeof(rule)); 
@@ -115,7 +119,20 @@ rule* rule_new(int simbol){
 	rl->follow.epsilon = 0;
 
 	rl->LL = vector_new(sizeof(predictive),4);
+
+	vector_set_free(rl->production.vec,&free_vector_of_vector);
+	vector_set_free(rl->production.first,&free_vector_of_vector);
+
 	return rl;
+}
+
+void rule_free(rule* rl){
+	vector_free(rl->production.vec);
+	vector_free(rl->production.first);
+
+	vector_free(rl->first.vec);
+
+	vector_free(rl->follow.vec);
 }
 
 rule* grammar_find_rule(grammar* gramm,int noterminal){
@@ -395,6 +412,9 @@ void grammar_debug_follow(grammar* gramm,int noterminal){
 	printf("}\n");
 }
 
+void vector_rule_free(void* v){
+	rule_free((*((rule**)v)));
+}
 
 grammar* grammar_new(){
 	grammar* new_grammar = (grammar*)malloc(sizeof(grammar));
@@ -404,7 +424,20 @@ grammar* grammar_new(){
 	new_grammar->noterminals = vector_new(sizeof(int),10);
 	new_grammar->state = stack_new(sizeof(language_simbol),5);
 
+
+	vector_set_free(new_grammar->rules,&vector_rule_free);
+
 	return new_grammar;
+}
+
+void grammar_free(grammar** gramm){
+	vector_free((*gramm)->rules);	
+	vector_free((*gramm)->terminals);
+	vector_free((*gramm)->noterminals);
+
+	free(*gramm);
+
+	*gramm = NULL;
 }
 
 

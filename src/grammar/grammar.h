@@ -70,6 +70,7 @@ void vecint_push_unique(vector_int* vec,int element);
 void vecint_push_unique_vecint(vector_int* vec_a,vector_int* vec_b);
 
 rule* rule_new(int simbol);
+void rule_free(rule* rl);
 rule* grammar_find_rule(grammar* gramm,int noterminal);
 int rule_isfirst(rule* rl);
 int rule_isfollow(rule* rl);
@@ -88,6 +89,8 @@ int grammar_end_input(grammar* gramm,int* status);
 void grammar_print_state(grammar* gramm);
 
 grammar* grammar_new();
+void grammar_free(grammar** gramm);
+
 void grammar_add_production(grammar* gramm,int noterminal,language_simbol* simbols,int n_simbol);
 void rule_add_predictive(rule* prod);
 void rule_check_LL(rule* rl);

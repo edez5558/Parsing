@@ -11,6 +11,9 @@ GRAMMAR_DEPD 	= $(PRE_VECTOR) $(PRE_STACK)
 LEXICAL_DEPD 	= $(PRE_TOKEN) $(PRE_UTIL)
 COMPILER_DEPD 	= $(PRE_GRAMMAR) $(PRE_LEXICAL) $(LEXICAL_DEPD) $(GRAMMAR_DEPD)
 
+compiler: src/main.c $(COMPILER_DEPD)
+	gcc -g src/main.c $(COMPILER_DEPD) -o bin/compiler
+
 $(PRE_TOKEN): src/token.c src/token.h
 	gcc -g -c src/token.c -o $(PRE_TOKEN)
 
@@ -30,9 +33,6 @@ $(PRE_UTIL): src/util/util.c
 
 clean:
 	rm -r $(PRE_FOLDER)*.o
-
-compiler: src/main.c $(COMPILER_DEPD)
-	gcc src/main.c $(COMPILER_DEPD) -o bin/compiler
 
 test_grammar: src/test_gramm.c $(TEST_DEPD)
 	gcc -g src/test_gramm.c $(TEST_DEPD) -o bin/generate_grammar

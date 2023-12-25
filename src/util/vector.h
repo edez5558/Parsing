@@ -10,6 +10,8 @@ typedef struct{
 	size_t size;
 	size_t alloc_size;
 	size_t element_size;
+
+	void (*callback)(void*);
 }vector;
 
 vector* vector_new(size_t element_size,size_t init_capacity);
@@ -28,6 +30,10 @@ void* vector_push(vector* v,void* value);
 
 void vector_push_n(vector* v,void* value,size_t n);
 
+void vector_set_free(vector* v,void (*callback)(void*));
+
 void vector_free(vector* v);
+
+void vector_foreach(vector* v, void (*callback)(void*));
 
 #endif
