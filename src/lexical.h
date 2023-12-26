@@ -8,6 +8,16 @@ typedef char BOOL;
 #define TRUE 1
 #define FALSE 0
 
+extern const char* lexical_reserved_words[];
+extern const char* lexical_combined_characters[];
+extern const char lexical_character_especial[];
+extern int lexical_n_reserved_words;
+extern int lexical_n_combined_characters;
+extern int lexical_n_charater_especial;
+
+extern BOOL on_comment;
+extern char character_buffer[3];
+
 typedef struct{
 	int count_token;
 	token* first_token;
