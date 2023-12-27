@@ -1,5 +1,5 @@
 C := gcc
-C_FLAGS := -g
+C_FLAGS := -g -Wall
 
 CC = $(C) $(C_FLAGS)
 

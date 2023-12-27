@@ -43,6 +43,7 @@ typedef struct{
 }reader_grammar;
 
 reader_grammar* reader_grammar_new();
+void reader_grammar_free(reader_grammar* rg);
 
 void reader_grammar_error(reader_grammar* reader);
 reader_simbol* reader_grammar_search_simbol(reader_grammar* reader);

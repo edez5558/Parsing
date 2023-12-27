@@ -21,7 +21,7 @@ parser* parser_new(lexical* lexer){
 }
 
 void parser_free(parser** psr){
-	grammar_free(&((*psr)->gramm));
+	reader_grammar_free((*psr)->reader);
 
 	*psr = NULL;
 }

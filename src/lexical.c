@@ -336,11 +336,10 @@ void lexical_to_file(const char* name){
 }
 
 void lexical_process_line(lexical* lexer,char* line, size_t len,int column){
-    char* next = line;
-    char current;
+	char* next = line;
+	char current;
 
-    char* last_start = line;
-    BOOL isDecimal = FALSE;
+	char* last_start = line;
 
 	lexer->info.line = (char*)malloc(len + 1);
 	memcpy(lexer->info.line,line,len);

@@ -5,10 +5,12 @@
 #include <string.h>
 #include <ctype.h>
 
+void reader_simbol_free(void* data);
+
 reader_grammar* reader_grammar_new(){
 	reader_grammar* new_reader = (reader_grammar*)malloc(sizeof(reader_grammar));
 	
-	new_reader->simbols = vector_new(sizeof(reader_simbol),6);; 
+	new_reader->simbols = vector_new(sizeof(reader_simbol),6);
 	new_reader->state = reader_search;
 	new_reader->next = NULL;
 	new_reader->gramm = NULL;
@@ -18,7 +20,21 @@ reader_grammar* reader_grammar_new(){
 	new_reader->line = 0;
 	new_reader->src_line = NULL;
 
+	vector_set_free(new_reader->simbols,&reader_simbol_free);
+
 	return new_reader;
+}
+
+void reader_simbol_free(void* data){
+	free(((reader_simbol*)data)->word);
+}
+
+void reader_grammar_free(reader_grammar* reader){
+	vector_free(reader->simbols);
+
+	grammar_free(&reader->gramm);
+
+	free(reader);
 }
 
 void reader_grammar_error(reader_grammar* reader){
@@ -101,7 +117,6 @@ int reader_grammar_isfirstword(char current){
 
 void reader_grammar_process_dictionary(reader_grammar* reader){
 	char current;
-	int value;
 
 	while((current = *reader->next)){
 		reader->next++;
@@ -173,13 +188,13 @@ void reader_grammar_insert_derivation(reader_grammar* reader){
 
 	if(simbol == NULL){
 		reader_grammar_error(reader);
-		printf("'%s' is no defined in dictionary\n",reader->word);	
+		printf("'%s' haven't been define in dictionary\n",reader->word);
 		return;
 	}
 
 	if(simbol->simbol.type == nodefine){
 		reader_grammar_error(reader);
-		printf("Warning: '%s' insert on production, but is no define\n",reader->word);
+		printf("Warning: '%s' insert on production, but haven't been define\n",reader->word);
 	}
 
 	if(reader->rl_current == NULL){
@@ -202,7 +217,7 @@ void reader_grammar_set_init(reader_grammar* reader){
 
 	if(simbol == NULL){
 		reader_grammar_error(reader);
-		printf("'%s' is no defined\n",reader->word);
+		printf("'%s' haven't been define\n",reader->word);
 		return;
 	}
 

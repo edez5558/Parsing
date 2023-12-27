@@ -30,7 +30,6 @@ int rule_ispredictive(rule* rl){
 
 void rule_add_predictive(rule* rl){
 	vector_simbol* simbols = NULL;
-	language_simbol* simbol = NULL;
 	predictive pre;
 
 	for(int i = 0; i < rl->production.vec->size; i++){
@@ -99,7 +98,6 @@ void vecint_push_unique_vecint(vector_int* vec_a,vector_int* vec_b){
 }
 
 void free_vector_of_vector(void* v){
-	puts("Free Vector Of Vector");
 	vector_free(*((void**)v));
 }
 
